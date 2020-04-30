@@ -1,0 +1,40 @@
+version: '2.4'
+services:
+
+    db:
+        image: postgres:10.6
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: odoo
+            POSTGRES_PASSWORD: odoo
+            POSTGRES_DB: postgres
+            PGDATA: /var/lib/postgresql/data/pgdata
+  
+    odoo:
+        image: druidoo/posbox:8.0
+        ports:
+            - "8069:8069"
+        tty: true
+        stdin_open: true
+        privileged: true
+        restart: unless-stopped
+        depends_on:
+            - db
+        volumes:
+            # Timezone from host
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+            # Hardware
+            - /dev/bus/usb:/dev/bus/usb
+            # Custom repositories
+            - ./repositories:/home/odoo/custom/repositories:ro
+        environment:
+            WAIT_PG: 'true'
+            LOG_LEVEL: 'debug'
+            LIMIT_TIME_CPU: 600
+            LIMIT_TIME_REAL: 1200
+            # All of your hw_modules should be server-wide modules
+            SERVER_WIDE_MODULES: web,hw_proxy,hw_posbox_homepage,hw_escpos
+            # Custom config. You probably don't need to change anything here
+            CUSTOM_CONFIG: |-
+                [options]
