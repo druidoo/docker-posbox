@@ -11,7 +11,7 @@ services:
             PGDATA: /var/lib/postgresql/data/pgdata
   
     odoo:
-        image: druidoo/posbox:8.0
+        image: druidoo/posbox:latest
         ports:
             - "8069:8069"
         tty: true
