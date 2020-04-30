@@ -53,6 +53,18 @@ Live logs:
 $ docker-compose --tail 100 -f
 ```
 
+### Adding custom modules
+
+You need to clone the repositories in `repositories` folder.
+
+This folder is automatically mounted when the container starts.
+
+You can't add modules directly to this folder. If you want to add only one module
+make sure you create a folder structure like this: `repositories/addons/your_module`
+
+You'll also need to edit the `docker-compose.yml` file to add your module to the
+`SERVER_WIDE_MODULES` list.
+
 ### Custom odoo.conf
 
 It's possible to edit the `CUSTOM_CONF` variable in the `docker-compose.yml` file.
