@@ -78,10 +78,21 @@ RUN pip install --user --no-cache-dir \
 		gatt \
 		v4l2 \
 		polib \
-		pycups
+		pycups \
+		gobject \
+		PyGObject
 
-# Check
+# TODO Check
 # https://github.com/odoo/odoo/tree/054d4bc6bc219bcc6b0a64265e8d7e9c7423dbc8/addons/point_of_sale/tools/posbox/overwrite_after_init/usr/local/lib/python3.7/dist-packages
+
+# Apply patches:
+# - https://github.com/odoo/odoo/blob/12.0/addons/point_of_sale/tools/posbox/overwrite_after_init/usr/local/lib/python3.7/dist-packages/v4l2.py.iotpatch
+
+# - maybe also https://github.com/odoo/odoo/blob/12.0/addons/point_of_sale/tools/posbox/overwrite_after_init/home/pi/odoo/odoo/http.py.iotpatch
+# ~/.local/lib/python3.5/site-packages/odoo/http.py
+
+COPY iotpatch/ $RESOURCES/iotpatch
+RUN echo "Replace this with bash script to apply batches"
 
 # Custom entrypoints
 COPY entrypoint.d/ $RESOURCES/entrypoint.d/
