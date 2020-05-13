@@ -92,7 +92,7 @@ RUN pip install --user --no-cache-dir \
 # ~/.local/lib/python3.5/site-packages/odoo/http.py
 
 COPY iotpatch/ $RESOURCES/iotpatch
-RUN echo "Replace this with bash script to apply batches"
+RUN $RESOURCES/iotpatch/apply_iotpatch.sh
 
 # Custom entrypoints
 COPY entrypoint.d/ $RESOURCES/entrypoint.d/
