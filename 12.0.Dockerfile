@@ -68,6 +68,13 @@ RUN echo "asd" \
 	&& rm -Rf /var/lib/apt/lists/* /tmp/* \
 	&& apt-get clean
 
+RUN mkdir /var/run/cups
+RUN chown odoo:odoo /var/run/cups
+
+# Custom entrypoints
+COPY entrypoint.d/ $RESOURCES/entrypoint.d/
+RUN chmod +777 -R $RESOURCES/entrypoint.d/
+
 USER odoo
 RUN pip install --user --no-cache-dir \
 		dbus-python \
@@ -80,7 +87,8 @@ RUN pip install --user --no-cache-dir \
 		polib \
 		pycups \
 		gobject \
-		PyGObject
+		PyGObject \
+		pyOpenSSL
 
 # TODO Check
 # https://github.com/odoo/odoo/tree/054d4bc6bc219bcc6b0a64265e8d7e9c7423dbc8/addons/point_of_sale/tools/posbox/overwrite_after_init/usr/local/lib/python3.7/dist-packages
@@ -93,6 +101,3 @@ RUN pip install --user --no-cache-dir \
 
 COPY iotpatch/ $RESOURCES/iotpatch
 RUN $RESOURCES/iotpatch/apply_iotpatch.sh
-
-# Custom entrypoints
-COPY entrypoint.d/ $RESOURCES/entrypoint.d/
