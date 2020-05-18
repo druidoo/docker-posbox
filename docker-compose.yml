@@ -11,7 +11,7 @@ services:
             PGDATA: /var/lib/postgresql/data/pgdata
   
     odoo:
-        image: druidoo/posbox:latest
+        image: druidoo/posbox:12.0
         ports:
             - "8069:8069"
         tty: true
@@ -33,6 +33,7 @@ services:
             LOG_LEVEL: 'debug'
             LIMIT_TIME_CPU: 600
             LIMIT_TIME_REAL: 1200
+            PGDATABASE: testposbox
             # All of your hw_modules should be server-wide modules
             SERVER_WIDE_MODULES: web,hw_proxy,hw_posbox_homepage,hw_escpos
             # Custom config. You probably don't need to change anything here
