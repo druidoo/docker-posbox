@@ -1,19 +1,9 @@
 FROM druidoo/odoo:12.0-base
 
-# Install odoo with sparse-checkout (only hw_* addons)
-RUN git clone --no-local --no-checkout --depth 1 --branch $ODOO_VERSION https://github.com/$ODOO_SOURCE $SOURCES/odoo && \
-	cd $SOURCES/odoo && \
-	git config core.sparsecheckout true && \
-	printf "/*\n!/addons/*\naddons/web\naddons/hw_*\n" | tee --append .git/info/sparse-checkout > /dev/null && \
-	git read-tree -mu HEAD
-
-RUN pip install --user --no-cache-dir $SOURCES/odoo
-
 # Install other iotbox requirements
 USER root
-RUN apt-get update
-
-RUN apt-get install -yqq --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -yqq --no-install-recommends \
 		virtualenv \
 		build-essential \
 		libdbus-glib-1-dev \
@@ -62,18 +52,16 @@ RUN apt-get install -yqq --no-install-recommends \
 		python3-qrcode \
 		python3-html2text \
 		python3-unittest2 \
-		python3-simplejson
-
-RUN echo "asd" \
+		python3-simplejson \
 	&& rm -Rf /var/lib/apt/lists/* /tmp/* \
 	&& apt-get clean
 
-RUN mkdir /var/run/cups
-RUN chown odoo:odoo /var/run/cups
+# So that odoo can start cups server
+RUN mkdir /var/run/cups && chown odoo:odoo /var/run/cups
 
-# Custom entrypoints
-COPY entrypoint.d/ $RESOURCES/entrypoint.d/
-RUN chmod +777 -R $RESOURCES/entrypoint.d/
+# Custom entrypoints & resources
+COPY resources/$ODOO_VERSION/entrypoint.d/ $RESOURCES/entrypoint.d/
+COPY resources/$ODOO_VERSION/iotpatch/ $RESOURCES/iotpatch
 
 USER odoo
 RUN pip install --user --no-cache-dir \
@@ -90,14 +78,14 @@ RUN pip install --user --no-cache-dir \
 		PyGObject \
 		pyOpenSSL
 
-# TODO Check
-# https://github.com/odoo/odoo/tree/054d4bc6bc219bcc6b0a64265e8d7e9c7423dbc8/addons/point_of_sale/tools/posbox/overwrite_after_init/usr/local/lib/python3.7/dist-packages
+# Install odoo with sparse-checkout (only hw_* addons)
+RUN git clone --no-local --no-checkout --depth 1 --branch $ODOO_VERSION https://github.com/$ODOO_SOURCE $SOURCES/odoo && \
+	cd $SOURCES/odoo && \
+	git config core.sparsecheckout true && \
+	printf "/*\n!/addons/*\naddons/web\naddons/hw_*\n" | tee --append .git/info/sparse-checkout > /dev/null && \
+	git read-tree -mu HEAD
 
-# Apply patches:
-# - https://github.com/odoo/odoo/blob/12.0/addons/point_of_sale/tools/posbox/overwrite_after_init/usr/local/lib/python3.7/dist-packages/v4l2.py.iotpatch
+RUN pip install --user --no-cache-dir $SOURCES/odoo
 
-# - maybe also https://github.com/odoo/odoo/blob/12.0/addons/point_of_sale/tools/posbox/overwrite_after_init/home/pi/odoo/odoo/http.py.iotpatch
-# ~/.local/lib/python3.5/site-packages/odoo/http.py
-
-COPY iotpatch/ $RESOURCES/iotpatch
+# Apply patches
 RUN $RESOURCES/iotpatch/apply_iotpatch.sh
