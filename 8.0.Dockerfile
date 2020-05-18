@@ -14,4 +14,4 @@ RUN if [ -f /home/odoo/.local/bin/openerp-server ]; then cp /home/odoo/.local/bi
 
 
 # Custom entrypoints
-COPY entrypoint.d/ $RESOURCES/entrypoint.d/
+COPY resources/$ODOO_VERSION/entrypoint.d/ $RESOURCES/entrypoint.d/
