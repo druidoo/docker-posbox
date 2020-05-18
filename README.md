@@ -21,11 +21,16 @@ curl -fsSL https://raw.githubusercontent.com/druidoo/docker-posbox/master/instal
 
 ```
 
+It'll install the iotbox:12.0. If you need another version, use the Manual Install.
+
+
 ### Manual Install (Advanced)
 
 1. Clone this repository `git clone https://github.com/druidoo/docker-posbox` && `cd docker-posbox`
 
-2. Run
+2. Edit `docker-compose.yml` file and select the correct posbox/iot version. ie: `druidoo/posbox:12.0`
+
+3. Run
 
 ```
 $ docker-compose up -d
