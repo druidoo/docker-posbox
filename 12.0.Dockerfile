@@ -5,6 +5,7 @@ USER root
 RUN apt-get update \
     && apt-get install -yqq --no-install-recommends \
 		virtualenv \
+		systemd \
 		build-essential \
 		libdbus-glib-1-dev \
 		libgirepository1.0-dev \
