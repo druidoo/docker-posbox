@@ -26,6 +26,7 @@ services:
             - /etc/localtime:/etc/localtime:ro
             # Hardware
             - /dev/bus/usb:/dev/bus/usb
+            - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
             # Custom repositories
             - ./repositories:/home/odoo/custom/repositories:ro
         environment:
