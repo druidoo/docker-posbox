@@ -11,6 +11,7 @@ RUN apt-get update \
 		libgirepository1.0-dev \
 		libcairo2-dev \
 		cups \
+		usbutils \
 		printer-driver-all \
 		cups-ipp-utils \
 		libcups2-dev \
