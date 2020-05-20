@@ -1,5 +1,14 @@
 FROM druidoo/odoo:8.0-base
 
+# Install other iotbox requirements
+USER root
+RUN apt-get update \
+    && apt-get install -yqq --no-install-recommends \
+		usbutils \
+	&& rm -Rf /var/lib/apt/lists/* /tmp/* \
+	&& apt-get clean
+USER odoo
+
 # Install odoo with sparse-checkout (only hw_* addons)
 RUN git clone --no-local --no-checkout --depth 1 --branch $ODOO_VERSION https://github.com/$ODOO_SOURCE $SOURCES/odoo && \
 	cd $SOURCES/odoo && \
