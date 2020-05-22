@@ -87,7 +87,7 @@ RUN git clone --no-local --no-checkout --depth 1 --branch $ODOO_VERSION https://
 	printf "/*\n!/addons/*\naddons/web\naddons/hw_*\n" | tee --append .git/info/sparse-checkout > /dev/null && \
 	git read-tree -mu HEAD
 
-RUN pip install --user --no-cache-dir $SOURCES/odoo
+RUN pip install --no-cache-dir $SOURCES/odoo
 
 # Apply patches
 RUN $RESOURCES/iotpatch/apply_iotpatch.sh

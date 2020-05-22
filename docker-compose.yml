@@ -11,7 +11,7 @@ services:
             PGDATA: /var/lib/postgresql/data/pgdata
   
     odoo:
-        image: druidoo/posbox:9.0
+        image: druidoo/posbox:11.0
         ports:
             - "8069:8069"
         tty: true
@@ -36,7 +36,9 @@ services:
             LIMIT_TIME_REAL: 1200
             PGDATABASE: posbox
             # All of your hw_modules should be server-wide modules
-            SERVER_WIDE_MODULES: web,hw_proxy,hw_posbox_homepage,hw_escpos
+            # - Don't add hw_posbox_upgrade as it not compatible with this image
+            # - Don't add hw_scanner as it's not needed, simply connect the scanner to your PC
+            SERVER_WIDE_MODULES: web,hw_proxy,hw_posbox_homepage,hw_scale,hw_escpos,hw_blackbox_be,hw_screen
             # Custom config. You probably don't need to change anything here
             CUSTOM_CONFIG: |-
                 [options]
