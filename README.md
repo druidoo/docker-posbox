@@ -28,7 +28,7 @@ It'll install the posbox v17 (built on Odoo `11.0` branch). If you need another 
 
 1. Clone this repository `git clone https://github.com/druidoo/docker-posbox` && `cd docker-posbox`
 
-2. Edit `docker-compose.yml` file and select the correct posbox/iot version. ie: `druidoo/posbox:12.0`
+2. Edit `docker-compose.yml` file and select the correct posbox/iot version. ie: `druidoo/posbox:11.0`
 
 3. Run
 
