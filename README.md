@@ -21,7 +21,7 @@ curl -fsSL https://raw.githubusercontent.com/druidoo/docker-posbox/master/instal
 
 ```
 
-It'll install the iotbox:12.0. If you need another version, use the Manual Install.
+It'll install the posbox v17 (built on Odoo `11.0` branch). If you need another version, use the Manual Install.
 
 
 ### Manual Install (Advanced)
