@@ -20,7 +20,7 @@ SUBSYSTEM=="usb", GROUP="usbusers", MODE="0660"
 SUBSYSTEMS=="usb", GROUP="usbusers", MODE="0660"
 ```
 
-2. Run `service udev restart` and `udevadm control --reload-rules`
+2. Run `service udev restart` and `sudo udevadm control --reload-rules`
 
 ## Install
 
