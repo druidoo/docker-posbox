@@ -11,6 +11,17 @@ you do not need the POSBox as you can run its software locally.
 
 For this purpose, you can use this dockerized version.
 
+## Configuration
+
+1. Add this file in `/usb/udev/rules.d/99-usb.rules`:
+
+```
+SUBSYSTEM=="usb", GROUP="usbusers", MODE="0660"
+SUBSYSTEMS=="usb", GROUP="usbusers", MODE="0660"
+```
+
+2. Run `service udev restart` and `udevadm control --reload-rules`
+
 ## Install
 
 This will update packages, install docker, and install the docker-posbox
