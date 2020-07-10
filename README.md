@@ -13,7 +13,7 @@ For this purpose, you can use this dockerized version.
 
 ## Configuration
 
-1. Add this file in `/usb/udev/rules.d/99-usb.rules`:
+1. Add this file in `/etc/udev/rules.d/99-usb.rules`:
 
 ```
 SUBSYSTEM=="usb", GROUP="usbusers", MODE="0660"
