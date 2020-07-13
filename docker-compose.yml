@@ -9,6 +9,8 @@ services:
             POSTGRES_PASSWORD: odoo
             POSTGRES_DB: postgres
             PGDATA: /var/lib/postgresql/data/pgdata
+        volumes:
+            - db:/var/lib/postgresql/data/pgdata
   
     odoo:
         image: druidoo/posbox:11.0
@@ -21,6 +23,7 @@ services:
         depends_on:
             - db
         volumes:
+            - filestore:/home/odoo/data
             # Timezone from host
             - /etc/timezone:/etc/timezone:ro
             - /etc/localtime:/etc/localtime:ro
@@ -42,3 +45,7 @@ services:
             # Custom config. You probably don't need to change anything here
             CUSTOM_CONFIG: |-
                 [options]
+
+volumes:
+    db:
+    filestore:
